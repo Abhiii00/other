@@ -43,6 +43,11 @@ updateUserByName = async (reqData,data) =>{
     return result;
 }  
 
+getUserByEmail = async (email) =>{
+    let sql = `SELECT email, password FROM userLogin WHERE email = '${email}';`;
+    const [result, fields] = await promisePool.query(sql);
+    return result;
+}
 
 }
 
