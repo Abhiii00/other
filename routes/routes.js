@@ -13,6 +13,7 @@ const router = express.Router();
  router.get('/getSpecificUser',userController.getUserByName.bind())
  router.post('/updateUser',userController.updateUser.bind())
  router.post('/loginUser',userController.loginUser.bind())
+ router.get('/getUserById',userController.getUserDetailsById.bind())
 
  router.get("/me", function (req, res) {
     return res.status(200).send({ success: true, msg: "Successfull api hit" });

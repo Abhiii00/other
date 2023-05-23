@@ -66,3 +66,15 @@ exports.loginUser = async (req, res) => {
         return res.status(500).send({ success: false, error: err.message })
     }
 }
+
+exports.getUserDetailsById = async (req, res) => {
+        try {
+            let data = req.query
+            let getSpecificUser = await userModel.getSpecificUserById(data)
+            if (getSpecificUser.length == 0) return res.status(400).send({ status: false, msg: 'No User Found' })
+            let userData = await userModel.getUserDetailsWithAddress(data)
+            return res.status(200).send({ status: true, msg: 'success', data: userData })
+        } catch (err) {
+            return res.status(500).send({ success: false, error: err.message })
+        }
+    }

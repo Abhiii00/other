@@ -12,43 +12,57 @@ const promisePool = pool.promise();
 
 class userModel {
 
- insertDetails = async (data) => {
+  insertDetails = async (data) => {
     let sql = `insert into userLogin (name, email, password)values ('${data.name}','${data.email}', '${data.password}')`;
     const [result, fields] = await promisePool.query(sql);
-    console.log(sql , result)
+    console.log(sql, result)
     return result;
   };
 
 
-getUsersDetails = async () => {
+  getUsersDetails = async () => {
     let sql = `SELECT ul.name, ul.email FROM userLogin as ul`;
     const [result, fields] = await promisePool.query(sql);
     return result;
-}
+  }
 
-getSpecificUser = async (name) =>{
+  getSpecificUser = async (name) => {
     let sql = `SELECT name, email FROM userLogin WHERE name = '${name}';`;
     const [result, fields] = await promisePool.query(sql);
     console.log(sql, result)
     return result;
-}
+  }
 
-updateUserByName = async (reqData,data) =>{
+  updateUserByName = async (reqData, data) => {
     let sql = ` UPDATE userLogin
     SET name = '${reqData.name}',
       email = '${reqData.email}'
-    WHERE name = '${data.name}'`   
- const [result, fields] = await promisePool.query(sql);
- console.log(sql, result)
+    WHERE name = '${data.name}'`
+    const [result, fields] = await promisePool.query(sql);
+    console.log(sql, result)
     return result;
-}  
+  }
 
-getUserByEmail = async (email) =>{
+  getUserByEmail = async (email) => {
     let sql = `SELECT email, password FROM userLogin WHERE email = '${email}';`;
     const [result, fields] = await promisePool.query(sql);
     return result;
-}
+  }
+
+  getSpecificUserById = async (data) => {
+    let sql = `SELECT id, name, email FROM userLogin WHERE id = '${data.id}'`;
+    const [result, fields] = await promisePool.query(sql);
+    console.log(sql, result, "1")
+    return result;
+  }
+
+  getUserDetailsWithAddress = async (data) => {
+    let sql = `SELECT * FROM userLogin LEFT JOIN address ON userLogin.id = address.id  where userLogin.id ='${data.id}'`;
+    const [result, fields] = await promisePool.query(sql);
+    console.log(sql, result)
+    return result;
+  }
 
 }
 
-  module.exports = new userModel();
+module.exports = new userModel();
